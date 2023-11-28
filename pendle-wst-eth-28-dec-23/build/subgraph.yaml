@@ -1,0 +1,42 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Contract
+    network: arbitrum-one
+    source:
+      address: "0xC8fD1F1E059d97ec71AE566DD6ca788DC92f36AF"
+      abi: Contract
+      startBlock: 112379310
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - Burn
+        - IncreaseObservationCardinalityNext
+        - Mint
+        - Swap
+        - Transfer
+        - UpdateImpliedRate
+      abis:
+        - name: Contract
+          file: Contract/abis/Contract.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Burn(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleBurn
+        - event: IncreaseObservationCardinalityNext(uint16,uint16)
+          handler: handleIncreaseObservationCardinalityNext
+        - event: Mint(indexed address,uint256,uint256,uint256)
+          handler: handleMint
+        - event: Swap(indexed address,indexed address,int256,int256,uint256,uint256)
+          handler: handleSwap
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: UpdateImpliedRate(indexed uint256,uint256)
+          handler: handleUpdateImpliedRate
+      file: Contract/Contract.wasm
